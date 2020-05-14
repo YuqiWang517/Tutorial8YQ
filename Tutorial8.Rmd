@@ -1,0 +1,58 @@
+---
+title: "Corona Virus Report"
+author:
+- familyname: XXXX
+  othernames: XXX
+  address: Monash Universtidy
+  email: XXX
+  correspondingauthor: true
+  qualifications:  XXX
+- familyname: XXXX
+  othernames: Reports
+  address: XXX
+  qualifications: XXX
+- familyname: XXX
+  othernames: XXX
+  address: XXX
+  email: XXX
+  correspondingauthor: true
+  qualifications:  XXX
+department: Our consultancy \newline add names &\newline add names
+organization: Australian Government COVID19
+bibliography: references.bib
+biblio-style: authoryear-comp
+linestretch: 1.5
+output:
+  bookdown::pdf_document2:
+    template: monashreport2.tex
+    fig_caption: yes
+    fig_height: 5
+    fig_width: 8
+    includes:
+      in_header: preamble.tex
+    keep_tex: yes
+    number_sections: yes
+    citation_package: biblatex
+    toc: false
+---
+
+```{r , echo = FALSE, message = FALSE, warning = FALSE}
+# Libraries
+
+library(tidyverse)
+library(readr)
+library(kableExtra)
+library(bookdown)
+
+```
+
+
+
+\section*{Country XX1 and YY1"}
+
+\section*{Country XX2 and YY2}
+
+\section*{Country XX3 and YY3}
+
+
+
