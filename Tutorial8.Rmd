@@ -46,6 +46,10 @@ library(bookdown)
 
 ```
 
+```{r read}
+data <- read_csv("Data/worldwidecases.csv")
+```
+
 
 
 \section*{Country XX1 and YY1}
@@ -65,6 +69,7 @@ Sys.setlocale("LC_ALL","English")
 world = read_csv('Data/worldwidecases.csv')
 world$dateRep = as.Date(world$dateRep, format = "%d/%m/%Y")
 ```
+
 
 ```{r}
 italy = world[world$countriesAndTerritories == "Italy",]
