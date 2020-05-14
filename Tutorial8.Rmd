@@ -54,14 +54,28 @@ library(bookdown)
 
 \section*{Country XX3 and YY3}
 
+We want to see more about the data from Indonesia and Malaysia. From the following table it can be seen about the number, number of cases from Indonesia, the number is twice the number of cases from Malaysia. Similarly, for the number of deaths from Malaysia which is very much less than its neighbors.
+
 ```{r}
-data3 <- data %>%
+datatotal <- data %>%
   select(-countryterritoryCode, -popData2018, -continentExp) %>%
   filter(countriesAndTerritories == c("Indonesia", "Malaysia")) %>%
   group_by(countriesAndTerritories) %>%
   summarise(sum = sum(cases), deaths = sum(deaths))
-knitr::kable(head(data3)) %>%
+knitr::kable(head(datatotal) %>%
   kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+```{r}
+data %>%
+  select(-countryterritoryCode, -popData2018, -continentExp) %>%
+  filter(countriesAndTerritories == c("Indonesia", "Malaysia")) %>%
+   group_by(countriesAndTerritories) %>%
+  summarise(sum = sum(cases)) %>%
+ggplot(aes(x = countriesAndTerritories,
+           y = sum)) +
+  geom_col()
+  
 ```
 
 
