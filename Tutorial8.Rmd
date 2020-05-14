@@ -1,10 +1,10 @@
 ---
 title: "Corona Virus Report"
 author:
-- familyname: XXXX
-  othernames: XXX
+- familyname: Li
+  othernames: Weihao
   address: Monash Universtidy
-  email: XXX
+  email: wlii0039@student.monash.edu
   correspondingauthor: true
   qualifications:  XXX
 - familyname: XXXX
@@ -46,9 +46,13 @@ library(bookdown)
 
 ```
 
+```{r read}
+data <- read_csv("Data/worldwidecases.csv")
+```
 
 
-\section*{Country XX1 and YY1"}
+
+\section*{Country XX1 and YY1}
 
 \section*{Country XX2 and YY2}
 
@@ -62,7 +66,7 @@ datatotal <- data %>%
   filter(countriesAndTerritories == c("Indonesia", "Malaysia")) %>%
   group_by(countriesAndTerritories) %>%
   summarise(sum = sum(cases), deaths = sum(deaths))
-knitr::kable(head(datatotal) %>%
+knitr::kable(head(datatotal)) %>%
   kableExtra::kable_styling(latex_options = "hold_position")
 ```
 
@@ -78,4 +82,42 @@ ggplot(aes(x = countriesAndTerritories,
   
 ```
 
+\section*{Country Italy and New Zealand}
 
+```{r echo = FALSE}
+Sys.setlocale("LC_ALL","English")
+```
+
+
+```{r message=FALSE}
+world = read_csv('Data/worldwidecases.csv')
+world$dateRep = as.Date(world$dateRep, format = "%d/%m/%Y")
+```
+
+>>>>>>> origin
+
+```{r}
+italy = world[world$countriesAndTerritories == "Italy",]
+nz = world[world$countriesAndTerritories == "New_Zealand",]
+```
+
+```{r italyfg, fig.cap="Daily new cases in Italy"}
+  ggplot() +
+  geom_line(data = italy, aes(x = dateRep, y = cases, col = "Italy")) +
+  xlab("Date")
+```
+
+In figure \@ref(fig:italyfg), it shows that Italy being affected by the coronavirus seriously in March. However, when it reached its peak, the situation was getting better as daily new cases started decliend.
+
+
+```{r nztable}
+nz %>%
+  arrange(desc(cases)) %>%
+  select(Date = dateRep, Country = countriesAndTerritories, cases) %>%
+  head(10) %>%
+knitr::kable('latex', 
+             caption  = 'Top 10 days with highest daily new cases in New Zealand',
+             booktabs = TRUE)
+```
+
+In table{tab:nztable}, it shows that New zealand being affected by the coronavirus seriously in March and April. In addition, we can see the trend of daily new cases that reached its peak at the end of March and started declined in the beginning of April.
