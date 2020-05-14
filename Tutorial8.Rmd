@@ -46,6 +46,10 @@ library(bookdown)
 
 ```
 
+```{r read}
+data <- read_csv("Data/worldwidecases.csv")
+```
+
 
 
 \section*{Country XX1 and YY1"}
@@ -53,6 +57,9 @@ library(bookdown)
 \section*{Country XX2 and YY2}
 
 \section*{Country XX3 and YY3}
+
+\section*{Country XX4 and YY4}
+
 
 
 
