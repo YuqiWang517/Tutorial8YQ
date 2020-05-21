@@ -121,3 +121,53 @@ knitr::kable('latex',
 ```
 
 In table{tab:nztable}, it shows that New zealand being affected by the coronavirus seriously in March and April. In addition, we can see the trend of daily new cases that reached its peak at the end of March and started declined in the beginning of April.
+
+
+```{r wrangling-indonesia-malaysia}
+indonesia <- world %>% filter(countriesAndTerritories == "Indonesia", year == 2020) %>% rename(country=countriesAndTerritories)
+malaysia <- world %>% filter(countriesAndTerritories == "Malaysia",  year == 2020) %>%
+rename(country=countriesAndTerritories)
+indonesia$month <- month(indonesia$month, label = TRUE, abbr = TRUE)
+malaysia$month <- month(malaysia$month, label = TRUE, abbr = TRUE)
+```
+
+Table \ref{tab:table-indonesia} shows the information on the number of positive cases and deaths due to Covid-19 in Indonesia in 2020. It can be seen that in the first two months, there has been no confirmation regarding either positive cases or death. However, in March, positive cases suddenly jumped to 1414 and deaths reached 122. In April, the number of cases increased by almost six times, followed by the number of deaths which increased five times over the previous month. In May, there was a significant decrease of around 4483 cases, as did the number of deaths which declined by almost three times. The explanation for the high death rate in Indonesia is that there are many more cases than have been detected, because they haven't been tested. @Coronavi99:online
+
+```{r table-indonesia}
+indonesia %>%
+  select(dateRep, day, month, year, cases, deaths, country) %>%
+  group_by(month, country) %>%
+  summarise(total_cases = sum(cases), total_deaths = sum(deaths)) %>%
+  kable(caption = "Total confirmed cases and deaths in Indonesia since January 2020 until May 2020") %>%
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+Table \ref(tab:table_malaysia) shows the information on the number of positive cases and deaths due to covid19 in 2020 in Malaysia. Overall, every month they confirm a positive case. Three Wuhan residents who came to Malaysia on January 23, 2020 from Singapore, were the first cases reported in the following two days. Since then, positive cases have gradually increased. @mat2020single The trend tends to rise and increases significantly to reach a peak in April with a total of 3319 cases. After that, the positive cases decreased the following month dramatically. At the beginning of the year, there were no deaths from Covid-19. The number of deaths was only recorded in March, April, and May with a total of 37, 63, and 8 deaths respectively.
+
+```{r table-malaysia}
+malaysia %>%
+  select(dateRep, day, month, year, cases, deaths, country) %>%
+  group_by(month, country) %>%
+  summarise(total_cases = sum(cases), total_deaths = sum(deaths)) %>%
+  kable(caption = "Total confirmed cases and deaths in Malaysia since January 2020 until May 2020") %>%
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+```{r plot-indomalay, fig.cap= "Comparation in terms of positive cases and deaths between Indonesia and Malaysia in 2020"}
+indomalay <- bind_rows(indonesia, malaysia) %>%
+pivot_longer(cols = c(cases,deaths),
+               names_to = "status",
+               values_to ="deaths") %>%
+  mutate(Count = deaths)
+
+plot_indomalay <-  ggplot(indomalay) +
+  geom_line(data= filter(indomalay, status == "cases"),
+           aes(x= dateRep, y = Count, colour = status)) +
+  geom_line(data= filter(indomalay, status == "deaths"),
+           aes(x= dateRep, y = Count, colour = status)) +
+    facet_wrap(~country) + ggtitle("Coronavirus in Indonesia and Malaysia")
+
+plot_indomalay
+```
+
+Figure \ref{fig:plot-indomalay} shows the comparison of the number of cases and deaths due to COVID 19 between Indonesia and Malaysia. The x-axis shows the time per day from January to May, whereas the y-axis shows the number of cases and deaths. From this graph, it can be seen that the number of cases in Malaysia is lower than in Indonesia. Similarly, the number of deaths. From March the case in Indonesia fluctuated but tended to increase dramatically over time. While in neighbour countries, the peak of cases was felt in March, but over time began to decline.
