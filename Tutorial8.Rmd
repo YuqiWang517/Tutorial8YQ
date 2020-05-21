@@ -58,7 +58,7 @@ data <- read_csv("Data/worldwidecases.csv")
 
 \section*{Country XX3 and YY3}
 
-We want to see more about the data from Indonesia and Malaysia. From the following table it can be seen about the number, number of cases from Indonesia, the number is twice the number of cases from Malaysia. Similarly, for the number of deaths from Malaysia which is very much less than its neighbors.
+We want to see more about the data from Indonesia and Malaysia. From the following table it can be seen about the number, number of cases from Indonesia, the number is twice the number of cases from Malaysia. Similarly, for the number of deaths from Malaysia which is very much less than its neighbor.
 
 ```{r}
 datatotal <- data %>%
